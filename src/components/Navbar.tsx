@@ -2,8 +2,8 @@ import { ModeToggle } from "./mode-toggle";
 
 const Navbar = () => {
   return (
-    <header className="container p-4">
-      <nav className="flex justify-between items-center">
+    <header className="container py-2">
+      <nav className="flex items-center justify-between">
         <h1 className="text-lg font-bold">Image Classifier</h1>
         <ModeToggle />
       </nav>

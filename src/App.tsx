@@ -11,7 +11,10 @@ const App = () => {
     const getModel = async () => {
       try {
         setLoadingModel(true);
-        const imageClassification = await mobilenet.load();
+        const imageClassification = await mobilenet.load({
+          version: 2,
+          alpha: 1,
+        });
         setModel(imageClassification);
         setLoadingModel(false);
       } catch (error: unknown) {
@@ -25,9 +28,9 @@ const App = () => {
   return (
     <>
       <Navbar />
-      <div className="container p-4 grid place-items-center h-[80vh]">
+      <main className="container grid min-h-[80dvh] place-items-center pb-4">
         <Classify model={model} loadingModel={loadingModel} />
-      </div>
+      </main>
     </>
   );
 };
