@@ -12,12 +12,18 @@
 
 import { Route as rootRoute } from './routes/__root'
 import { Route as WhiteboardImport } from './routes/whiteboard'
+import { Route as SocketImport } from './routes/socket'
 import { Route as ClassifierImport } from './routes/classifier'
 
 // Create/Update Routes
 
 const WhiteboardRoute = WhiteboardImport.update({
   path: '/whiteboard',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const SocketRoute = SocketImport.update({
+  path: '/socket',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -34,6 +40,10 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ClassifierImport
       parentRoute: typeof rootRoute
     }
+    '/socket': {
+      preLoaderRoute: typeof SocketImport
+      parentRoute: typeof rootRoute
+    }
     '/whiteboard': {
       preLoaderRoute: typeof WhiteboardImport
       parentRoute: typeof rootRoute
@@ -45,6 +55,7 @@ declare module '@tanstack/react-router' {
 
 export const routeTree = rootRoute.addChildren([
   ClassifierRoute,
+  SocketRoute,
   WhiteboardRoute,
 ])
 
