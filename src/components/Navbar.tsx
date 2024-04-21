@@ -11,7 +11,6 @@ const Navbar = () => {
         <Link className="" to="/whiteboard">
           Whiteboard
         </Link>
-        <Link to="/socket">Socket</Link>
         <ModeToggle />
       </nav>
     </header>

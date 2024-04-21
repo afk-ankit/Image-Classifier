@@ -5,7 +5,7 @@ export const Route = createRootRoute({
   component: () => (
     <>
       <Navbar />
-      <main className="container grid min-h-[80dvh] place-items-center pb-4">
+      <main>
         <Outlet />
       </main>
     </>
