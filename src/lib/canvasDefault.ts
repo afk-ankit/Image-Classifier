@@ -4,8 +4,8 @@ export const setDefaultCanvas = (
   canvas: Canvas,
   setZoom: React.Dispatch<React.SetStateAction<number>>,
 ) => {
-  // canvas.isDrawingMode = false;
-  canvas.on("mouse:down", function (opt) {
+  /* eslint-disable @typescript-eslint/no-explicit-any */
+  canvas.on("mouse:down", function (this: any, opt) {
     const evt = opt.e;
     if (evt.altKey === true) {
       this.isDragging = true;
@@ -14,7 +14,7 @@ export const setDefaultCanvas = (
       this.lastPosY = evt.clientY;
     }
   });
-  canvas.on("mouse:move", function (opt) {
+  canvas.on("mouse:move", function (this: any, opt) {
     if (this.isDragging) {
       const e = opt.e;
       const vpt = this.viewportTransform;
@@ -25,7 +25,7 @@ export const setDefaultCanvas = (
       this.lastPosY = e.clientY;
     }
   });
-  canvas.on("mouse:up", function (opt) {
+  canvas.on("mouse:up", function (this: any) {
     // on mouse up we want to recalculate new interaction
     // for all objects, so we call setViewportTransform
     this.setViewportTransform(this.viewportTransform);
