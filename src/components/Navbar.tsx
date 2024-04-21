@@ -3,7 +3,7 @@ import { ModeToggle } from "./mode-toggle";
 
 const Navbar = () => {
   return (
-    <header className="container py-4">
+    <header className="container py-4 shadow-sm">
       <nav className="flex items-center justify-end gap-4">
         <Link className="" to="/classifier">
           Image Classifier
