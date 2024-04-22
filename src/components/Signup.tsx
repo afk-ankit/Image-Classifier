@@ -48,7 +48,7 @@ export const Signup = () => {
                 };
 
                 await axios.post(
-                  `${import.meta.env.VITE_BACKEND_URL}/register`,
+                  `https://whiteboard-server-shh3.onrender.com/register`,
                   user,
                 );
                 navigate({ to: "/classifier" });

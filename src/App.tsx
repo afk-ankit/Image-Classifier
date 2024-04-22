@@ -27,7 +27,7 @@ const App = () => {
     };
     const token = localStorage.getItem("token");
     if (token) {
-      getToken(`${import.meta.env.VITE_BACKEND_URL}/verify`, token);
+      getToken(`https://whiteboard-server-shh3.onrender.com/verify`, token);
     }
   }, [addUser]);
   return <RouterProvider router={router} />;
