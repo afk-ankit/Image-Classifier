@@ -8,35 +8,62 @@ import { Minus, Plus } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { WhiteBoardNavbar } from "./WhiteBoardNavbar";
 import { Button } from "./ui/button";
+import { getRouteApi } from "@tanstack/react-router";
+
+const routeApi = getRouteApi("/whiteBoard/$id");
 
 export const WhiteBoard = () => {
+  const { id } = routeApi.useParams();
   const [zoom, setZoom] = useState<number>(1);
   const emmitThrottledPostition = useRef(throttle(emmitPosition, 50));
   const { editor, onReady } = useFabricJSEditor();
   useEffect(() => {
-    if (editor) {
-      editor.canvas.freeDrawingBrush.width = 4;
-      editor.canvas.freeDrawingBrush.color = "white";
+    const sessoinId = localStorage.getItem("sessionId");
+    if (sessoinId) {
+      socket.emit("rejoin-session", sessoinId);
+    }
+    const handleDrawn = (data: { data: JSON }) => {
+      if (editor) {
+        editor.canvas.loadFromJSON(
+          data.data,
+          editor.canvas.renderAll.bind(editor.canvas),
+        );
+      }
+    };
 
-      socket.on("user drawn", (data) => {
+    const handleFirstLoad = (data: JSON) => {
+      if (editor && data) {
+        console.log(data);
         editor.canvas.loadFromJSON(
           data,
           editor.canvas.renderAll.bind(editor.canvas),
         );
-      });
+      }
+    };
+
+    if (editor) {
+      socket.on("drawing-data", handleFirstLoad);
+      editor.canvas.freeDrawingBrush.width = 4;
+      editor.canvas.freeDrawingBrush.color = "#000000";
+      setDefaultCanvas(editor.canvas, setZoom);
+
+      socket.on("drawing", handleDrawn);
 
       editor.canvas.on("mouse:up", () => {
-        socket.emit("drawing", editor.canvas.toJSON());
+        const data = editor.canvas.toJSON();
+        socket.emit("drawing", { sessionId: id, data });
       });
-      setDefaultCanvas(editor.canvas, setZoom);
     }
-    return () => {};
-  }, [editor]);
+    return () => {
+      socket.off("drawing", handleDrawn);
+      socket.off("drawing-data", handleFirstLoad);
+    };
+  }, [editor, id]);
 
   return (
     <div className={cn("size-full")}>
       <div
-        className="relative h-[89vh] border border-dotted bg-gray-200 bg-secondary dark:bg-background"
+        className="relative h-[89dvh] border border-dotted bg-gray-200 bg-secondary dark:bg-background"
         onMouseMove={(e) => emmitThrottledPostition.current(e)}
       >
         <WhiteBoardNavbar editor={editor} />

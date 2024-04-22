@@ -8,7 +8,7 @@ const Navbar = () => {
         <Link className="" to="/classifier">
           Image Classifier
         </Link>
-        <Link className="" to="/whiteboard">
+        <Link className="" to="/createWhiteBoard">
           Whiteboard
         </Link>
         <ModeToggle />

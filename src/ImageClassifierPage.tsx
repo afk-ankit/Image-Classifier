@@ -6,6 +6,7 @@ import "@tensorflow/tfjs-backend-webgl";
 const ImageClassifierPage = () => {
   const [model, setModel] = useState<mobilenet.MobileNet | null>(null);
   const [loadingModel, setLoadingModel] = useState(false);
+
   useEffect(() => {
     const getModel = async () => {
       try {

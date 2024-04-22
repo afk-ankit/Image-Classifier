@@ -11,24 +11,24 @@
 // Import Routes
 
 import { Route as rootRoute } from './routes/__root'
-import { Route as WhiteboardImport } from './routes/whiteboard'
-import { Route as SocketImport } from './routes/socket'
+import { Route as CreateWhiteBoardImport } from './routes/createWhiteBoard'
 import { Route as ClassifierImport } from './routes/classifier'
+import { Route as WhiteBoardIdImport } from './routes/whiteBoard/$id'
 
 // Create/Update Routes
 
-const WhiteboardRoute = WhiteboardImport.update({
-  path: '/whiteboard',
-  getParentRoute: () => rootRoute,
-} as any)
-
-const SocketRoute = SocketImport.update({
-  path: '/socket',
+const CreateWhiteBoardRoute = CreateWhiteBoardImport.update({
+  path: '/createWhiteBoard',
   getParentRoute: () => rootRoute,
 } as any)
 
 const ClassifierRoute = ClassifierImport.update({
   path: '/classifier',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const WhiteBoardIdRoute = WhiteBoardIdImport.update({
+  path: '/whiteBoard/$id',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -40,12 +40,12 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ClassifierImport
       parentRoute: typeof rootRoute
     }
-    '/socket': {
-      preLoaderRoute: typeof SocketImport
+    '/createWhiteBoard': {
+      preLoaderRoute: typeof CreateWhiteBoardImport
       parentRoute: typeof rootRoute
     }
-    '/whiteboard': {
-      preLoaderRoute: typeof WhiteboardImport
+    '/whiteBoard/$id': {
+      preLoaderRoute: typeof WhiteBoardIdImport
       parentRoute: typeof rootRoute
     }
   }
@@ -55,8 +55,8 @@ declare module '@tanstack/react-router' {
 
 export const routeTree = rootRoute.addChildren([
   ClassifierRoute,
-  SocketRoute,
-  WhiteboardRoute,
+  CreateWhiteBoardRoute,
+  WhiteBoardIdRoute,
 ])
 
 /* prettier-ignore-end */

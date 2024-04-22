@@ -12,15 +12,21 @@ import {
   MousePointer2,
   Redo,
   Settings,
+  Share,
   Trash2,
+  Type,
   Undo,
 } from "lucide-react";
 import { useEffect, useState } from "react";
 import { Button } from "./ui/button";
 import { Input } from "./ui/input";
 import { Separator } from "./ui/separator";
-
+import { getRouteApi } from "@tanstack/react-router";
+import { useToast } from "./ui/use-toast";
+import { socket } from "@/lib/socket";
 const history: FiberObject[] = [];
+
+const routeApi = getRouteApi("/whiteBoard/$id");
 
 export const WhiteBoardNavbar = ({
   editor,
@@ -28,8 +34,11 @@ export const WhiteBoardNavbar = ({
   editor: FabricJSEditor | undefined;
 }) => {
   const [isDrawing, setIsDrawing] = useState(false);
-  const [color, setColor] = useState<string>("#ffffff");
+  const [color, setColor] = useState<string>("#000000");
   const [size, setSize] = useState<"sm" | "lg" | "md">("md");
+  const id = routeApi.useParams();
+  const searchParams = routeApi.useSearch();
+  const { toast } = useToast();
 
   useEffect(() => {
     const keydownHandler = (e: KeyboardEvent) => {
@@ -93,9 +102,24 @@ export const WhiteBoardNavbar = ({
         variant={"ghost"}
         size={"icon"}
         onClick={() => {
+          if (editor) {
+            editor.addText("Inser Here");
+            editor.canvas.isDrawingMode = false;
+            setIsDrawing(false);
+          }
+        }}
+      >
+        <Type className="size-5" />
+      </Button>
+      <Button
+        variant={"ghost"}
+        size={"icon"}
+        onClick={() => {
           if (editor && editor.canvas._objects.length > 0) {
             history.push(editor.canvas._objects.pop()!);
             editor.canvas.renderAll();
+            const data = editor.canvas.toJSON();
+            socket.emit("drawing", { sessionId: id.id, data });
           }
         }}
       >
@@ -107,6 +131,8 @@ export const WhiteBoardNavbar = ({
         onClick={() => {
           if (history.length > 0 && editor) {
             editor.canvas.add(history.pop()!);
+            const data = editor.canvas.toJSON();
+            socket.emit("drawing", { sessionId: id.id, data });
           }
         }}
       >
@@ -118,6 +144,8 @@ export const WhiteBoardNavbar = ({
         onClick={() => {
           if (editor) {
             editor.canvas.clear();
+            const data = editor.canvas.toJSON();
+            socket.emit("drawing", { sessionId: id.id, data });
           }
         }}
       >
@@ -206,9 +234,26 @@ export const WhiteBoardNavbar = ({
               </ToggleGroupItem>
             </ToggleGroup>
           </div>
-          {/* </div> */}
         </PopoverContent>
       </Popover>
+      {searchParams.user && (
+        <Button
+          variant={"ghost"}
+          size={"icon"}
+          onClick={() => {
+            navigator.clipboard
+              .writeText(id.id)
+              .then(() => {
+                toast({ description: "Session ID copied to clipboard" });
+              })
+              .catch((err) => {
+                console.error("Could not copy text: ", err);
+              });
+          }}
+        >
+          <Share className="size-5" />
+        </Button>
+      )}
     </div>
   );
 };
