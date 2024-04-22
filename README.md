@@ -1,30 +1,126 @@
-# React + TypeScript + Vite
+# Whiteboard and Image Classifier
+<p align="center">
+  <img src="public/home.png" width="700">
+</p>
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Deployment Link 🚀
+Website is live [here](https://image-ai-classifier.vercel.app/).
+## WhiteBoard
 
-Currently, two official plugins are available:
+The WhiteBoard feature allows users to collaborate in real time. Users can draw on the whiteboard and see each other's drawings in real time.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+<p align="center">
+  <img src="public/whiteboard_gif.gif" width="full">
+</p>
 
-## Expanding the ESLint configuration
+## ImageClassification
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+The ImageClassification feature uses a pre-trained AI model to classify images. Users can upload an image, and the application will classify the image based on the pre-trained model.
 
-- Configure the top-level `parserOptions` property like this:
+<p align="center">
+  <img src="public/image_classifier_gif.gif" width="full">
+</p>
 
-```js
-export default {
-  // other rules...
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-  },
-}
-```
+## Screenshots
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+### Dark Mode
+
+<p align="center">
+  <img src="public/home_dark.png" width="700">
+  <br>
+  <em>Home screen</em>
+</p>
+
+<p align="center">
+  <img src="public/login_dark.png" width="700">
+  <br>
+  <em>Signin screen</em>
+</p>
+
+<p align="center">
+  <img src="public/register_dark.png" width="700">
+  <br>
+  <em>Signup screen</em>
+</p>
+
+<p align="center">
+  <img src="public/create_whiteboard_dark.png" width="700">
+  <br>
+  <em>Create whiteboard screen</em>
+</p>
+
+<p align="center">
+  <img src="public/whiteboard_dark.png" width="700">
+  <br>
+  <em>Whiteboard screen</em>
+</p>
+
+<p align="center">
+  <img src="public/classifier_dark.png" width="700">
+  <br>
+  <em>Image Classifier Screen</em>
+</p>
+
+### Light Mode
+
+<p align="center">
+  <img src="public/home.png" width="700">
+  <br>
+  <em>Home screen</em>
+</p>
+
+<p align="center">
+  <img src="public/login.png" width="700">
+  <br>
+  <em>Signin screen</em>
+</p>
+
+<p align="center">
+  <img src="public/register.png" width="700">
+  <br>
+  <em>Signup screen</em>
+</p>
+
+<p align="center">
+  <img src="public/create_whiteboard.png" width="700">
+  <br>
+  <em>Whiteboard create screen</em>
+</p>
+<p align="center">
+  <img src="public/whiteboard_light.png" width="700">
+  <br>
+  <em>Whiteboard screen</em>
+</p>
+
+<p align="center">
+  <img src="public/image_classifier.png" width="700">
+  <br>
+  <em>Image Classifier Screen</em>
+</p>
+
+## Running Locally
+
+Follow these steps to run the application on your local machine:
+
+1. Clone the repository from GitHub. You can use the following command to clone the repository:
+
+   ```bash
+    git clone https://github.com/afk-ankit/Image-Classifier
+   ```
+2. Navigate to the project directory 
+   ```bash
+    cd image_classifier
+   ``` 
+3. Install the required dependencies:
+    ```bash
+      pnpm install 
+    ```
+4. Start the dev server
+    ```bash
+      pnpm dev
+    ```
+Congrats you started your application 🚀 on [http://localhost:5173](http://localhost:5173).
+## Dependencies
+
+This application depends on a server, which is hosted in a separate repository. You can find the server code [here](https://github.com/afk-ankit/whiteboard-server).
+

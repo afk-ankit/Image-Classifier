@@ -12,9 +12,9 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Input } from "./ui/input";
 import { Button } from "./ui/button";
 import { Link, useNavigate } from "@tanstack/react-router";
-import axios from "axios";
 import { useToast } from "./ui/use-toast";
 import { useUserStore } from "@/Store";
+import axios, { AxiosError } from "axios";
 
 const LoginSchema = z.object({
   email: z.string().email().min(1, "email required"),
@@ -44,7 +44,7 @@ export const Signin = () => {
                   password: data.password,
                 };
                 const res = await axios.post(
-                  `https://whiteboard-server-shh3.onrender.com/login`,
+                  "http://localhost:8000/login",
                   user,
                 );
                 const token = res.data.token;
@@ -54,9 +54,9 @@ export const Signin = () => {
                 addUser(recievedUser.username, recievedUser.email);
                 navigate({ to: "/createWhiteBoard" });
               } catch (error) {
-                if (error instanceof Error)
+                if (error instanceof AxiosError)
                   toast({
-                    description: error.message,
+                    description: error.response?.data.message,
                   });
               }
             })}
