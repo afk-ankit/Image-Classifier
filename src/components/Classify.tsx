@@ -24,7 +24,7 @@ export default function Classify({
     }[]
   >([]);
   return (
-    <section className="grid h-[80dvh] w-full place-items-center px-2 sm:container">
+    <section className="grid min-h-[80dvh] w-full place-items-center p-2 sm:container">
       <div className="m-auto w-full space-y-4 md:w-[750px]">
         <Input
           accept="image/*"

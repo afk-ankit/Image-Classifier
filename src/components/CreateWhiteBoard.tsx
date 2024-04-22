@@ -34,7 +34,7 @@ export const CreateWhiteBoard = () => {
         Hello{" "}
         <span className="font-bold capitalize text-green-500">{user}</span>
       </h1>
-      <div className="mt-10 flex justify-center gap-8">
+      <div className="mt-10 flex flex-col items-center justify-center gap-8 sm:flex-row">
         <div
           className="grid size-60 cursor-pointer place-items-center rounded-lg border bg-secondary"
           onClick={() => {

@@ -34,7 +34,7 @@ export const Signup = () => {
     resolver: zodResolver(RegisterSchema),
   });
   return (
-    <section className="grid  h-[80dvh] place-items-center py-4 sm:container sm:px-1">
+    <section className="grid  min-h-[80dvh] place-items-center py-4 sm:container sm:px-1">
       <div className="m-auto w-full rounded-sm p-4 md:w-[750px]">
         <h1 className="text-center text-2xl font-bold">User Signup</h1>
         <Form {...form}>
