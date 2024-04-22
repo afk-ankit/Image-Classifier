@@ -44,7 +44,7 @@ export const Signin = () => {
                   password: data.password,
                 };
                 const res = await axios.post(
-                  "http://localhost:8000/login",
+                  "https://whiteboard-server-shh3.onrender.com/login",
                   user,
                 );
                 const token = res.data.token;
