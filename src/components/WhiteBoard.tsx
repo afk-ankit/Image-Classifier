@@ -1,11 +1,9 @@
 import { setDefaultCanvas } from "@/lib/canvasDefault";
-import { emmitPosition } from "@/lib/cursorPosition";
 import { socket } from "@/lib/socket";
 import { cn } from "@/lib/utils";
 import { FabricJSCanvas, useFabricJSEditor } from "fabricjs-react";
-import throttle from "lodash.throttle";
 import { Minus, Plus } from "lucide-react";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { WhiteBoardNavbar } from "./WhiteBoardNavbar";
 import { Button } from "./ui/button";
 import { getRouteApi } from "@tanstack/react-router";
@@ -15,7 +13,7 @@ const routeApi = getRouteApi("/whiteBoard/$id");
 export const WhiteBoard = () => {
   const { id } = routeApi.useParams();
   const [zoom, setZoom] = useState<number>(1);
-  const emmitThrottledPostition = useRef(throttle(emmitPosition, 50));
+
   const { editor, onReady } = useFabricJSEditor();
   useEffect(() => {
     const sessoinId = localStorage.getItem("sessionId");
@@ -62,12 +60,8 @@ export const WhiteBoard = () => {
 
   return (
     <div className={cn("size-full")}>
-      <div
-        className="relative h-[89dvh] border border-dotted bg-gray-200 bg-secondary dark:bg-background"
-        onMouseMove={(e) => emmitThrottledPostition.current(e)}
-      >
+      <div className="relative h-[89dvh] border border-dotted bg-gray-200 bg-secondary dark:bg-background">
         <WhiteBoardNavbar editor={editor} />
-        {/* {cursorPoint && <Cursor point={[cursorPoint.x, cursorPoint.y]} />} */}
         <FabricJSCanvas className="mb-0 size-full" onReady={onReady} />
         <div className="absolute bottom-4 left-4 flex items-center gap-2 rounded-sm border bg-background">
           <Button size={"icon"} variant={"ghost"} className="size-8">

@@ -11,7 +11,9 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Input } from "./ui/input";
 import { Button } from "./ui/button";
-import { Link } from "@tanstack/react-router";
+import { Link, useNavigate } from "@tanstack/react-router";
+import axios from "axios";
+import { useToast } from "./ui/use-toast";
 
 const RegisterSchema = z.object({
   username: z
@@ -26,16 +28,33 @@ const RegisterSchema = z.object({
 type TRegisterSchema = z.infer<typeof RegisterSchema>;
 
 export const Signup = () => {
+  const navigate = useNavigate();
+  const { toast } = useToast();
   const form = useForm<TRegisterSchema>({
     resolver: zodResolver(RegisterSchema),
   });
   return (
     <section className="grid  h-[80dvh] place-items-center py-4 sm:container sm:px-1">
-      <div className="m-auto w-full rounded-sm border p-4 md:w-[750px]">
-        <h1 className="text-center text-lg font-bold">User Signup</h1>
+      <div className="m-auto w-full rounded-sm p-4 md:w-[750px]">
+        <h1 className="text-center text-2xl font-bold">User Signup</h1>
         <Form {...form}>
           <form
-            onSubmit={form.handleSubmit((data) => console.log(data))}
+            onSubmit={form.handleSubmit(async (data) => {
+              try {
+                const user = {
+                  username: data.username,
+                  email: data.email,
+                  password: data.password,
+                };
+                await axios.post("http://localhost:8000/register", user);
+                navigate({ to: "/classifier" });
+              } catch (error) {
+                if (error instanceof Error)
+                  toast({
+                    description: error.message,
+                  });
+              }
+            })}
             className="space-y-3"
           >
             <FormField

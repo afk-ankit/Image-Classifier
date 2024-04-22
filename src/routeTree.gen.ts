@@ -15,6 +15,7 @@ import { Route as SignupImport } from './routes/signup'
 import { Route as SigninImport } from './routes/signin'
 import { Route as CreateWhiteBoardImport } from './routes/createWhiteBoard'
 import { Route as ClassifierImport } from './routes/classifier'
+import { Route as IndexImport } from './routes/index'
 import { Route as WhiteBoardIdImport } from './routes/whiteBoard/$id'
 
 // Create/Update Routes
@@ -39,6 +40,11 @@ const ClassifierRoute = ClassifierImport.update({
   getParentRoute: () => rootRoute,
 } as any)
 
+const IndexRoute = IndexImport.update({
+  path: '/',
+  getParentRoute: () => rootRoute,
+} as any)
+
 const WhiteBoardIdRoute = WhiteBoardIdImport.update({
   path: '/whiteBoard/$id',
   getParentRoute: () => rootRoute,
@@ -48,6 +54,10 @@ const WhiteBoardIdRoute = WhiteBoardIdImport.update({
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/': {
+      preLoaderRoute: typeof IndexImport
+      parentRoute: typeof rootRoute
+    }
     '/classifier': {
       preLoaderRoute: typeof ClassifierImport
       parentRoute: typeof rootRoute
@@ -74,6 +84,7 @@ declare module '@tanstack/react-router' {
 // Create and export the route tree
 
 export const routeTree = rootRoute.addChildren([
+  IndexRoute,
   ClassifierRoute,
   CreateWhiteBoardRoute,
   SigninRoute,

@@ -11,8 +11,10 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { Input } from "./ui/input";
+import { useUserStore } from "@/Store";
 
 export const CreateWhiteBoard = () => {
+  const user = useUserStore((state) => state.username);
   const navigate = useNavigate();
   useEffect(() => {
     const handleCreate = (data: string) => {
@@ -28,7 +30,10 @@ export const CreateWhiteBoard = () => {
 
   return (
     <section className="container py-5">
-      <h1 className="mt-5 text-center text-2xl">Create WhiteBoard</h1>
+      <h1 className="mt-5 text-center text-2xl">
+        Hello{" "}
+        <span className="font-bold capitalize text-green-500">{user}</span>
+      </h1>
       <div className="mt-10 flex justify-center gap-8">
         <div
           className="grid size-60 cursor-pointer place-items-center rounded-lg border bg-secondary"

@@ -24,8 +24,8 @@ export default function Classify({
     }[]
   >([]);
   return (
-    <section className="container grid h-[80dvh] w-full place-items-center">
-      <div className="m-auto w-full space-y-4 lg:w-[800px]">
+    <section className="grid h-[80dvh] w-full place-items-center px-2 sm:container">
+      <div className="m-auto w-full space-y-4 md:w-[750px]">
         <Input
           accept="image/*"
           type="file"

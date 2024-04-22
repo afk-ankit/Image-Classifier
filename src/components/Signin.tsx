@@ -11,7 +11,10 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Input } from "./ui/input";
 import { Button } from "./ui/button";
-import { Link } from "@tanstack/react-router";
+import { Link, useNavigate } from "@tanstack/react-router";
+import axios from "axios";
+import { useToast } from "./ui/use-toast";
+import { useUserStore } from "@/Store";
 
 const LoginSchema = z.object({
   email: z.string().email().min(1, "email required"),
@@ -21,17 +24,42 @@ const LoginSchema = z.object({
 type TloginSchema = z.infer<typeof LoginSchema>;
 
 export const Signin = () => {
+  const addUser = useUserStore((state) => state.addUser);
+  const navigate = useNavigate();
+  const { toast } = useToast();
   const form = useForm<TloginSchema>({
     resolver: zodResolver(LoginSchema),
   });
   return (
     <section className="grid  h-[80dvh] place-items-center py-4 sm:container sm:px-1">
-      <div className="m-auto w-full rounded-sm border p-4 md:w-[750px]">
-        <h1 className="text-center text-lg font-bold">User Signin</h1>
+      <div className="m-auto w-full rounded-sm p-4 md:w-[750px]">
+        <h1 className="text-center text-2xl font-bold">User Signin</h1>
         <Form {...form}>
           <form
-            onSubmit={form.handleSubmit((data) => console.log(data))}
             className="space-y-3"
+            onSubmit={form.handleSubmit(async (data) => {
+              try {
+                const user = {
+                  email: data.email,
+                  password: data.password,
+                };
+                const res = await axios.post(
+                  "http://localhost:8000/login",
+                  user,
+                );
+                const token = res.data.token;
+                const recievedUser = res.data.user;
+
+                localStorage.setItem("token", token);
+                addUser(recievedUser.username, recievedUser.email);
+                navigate({ to: "/createWhiteBoard" });
+              } catch (error) {
+                if (error instanceof Error)
+                  toast({
+                    description: error.message,
+                  });
+              }
+            })}
           >
             <FormField
               control={form.control}

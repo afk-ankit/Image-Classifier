@@ -1,4 +1,5 @@
 import { WhiteBoard } from "@/components/WhiteBoard";
+import { WithAuth } from "@/components/WithAuth";
 import { createFileRoute } from "@tanstack/react-router";
 
 export const Route = createFileRoute("/whiteBoard/$id")({
@@ -7,5 +8,9 @@ export const Route = createFileRoute("/whiteBoard/$id")({
       user: search.user as string,
     };
   },
-  component: () => <WhiteBoard />,
+  component: () => (
+    <WithAuth>
+      <WhiteBoard />
+    </WithAuth>
+  ),
 });
