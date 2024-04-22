@@ -46,7 +46,11 @@ export const Signup = () => {
                   email: data.email,
                   password: data.password,
                 };
-                await axios.post("http://localhost:8000/register", user);
+
+                await axios.post(
+                  `${import.meta.env.VITE_BACKEND_URL}/register`,
+                  user,
+                );
                 navigate({ to: "/classifier" });
               } catch (error) {
                 if (error instanceof Error)

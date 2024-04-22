@@ -44,7 +44,7 @@ export const Signin = () => {
                   password: data.password,
                 };
                 const res = await axios.post(
-                  "http://localhost:8000/login",
+                  `${import.meta.env.VITE_BACKEND_URL}/login`,
                   user,
                 );
                 const token = res.data.token;

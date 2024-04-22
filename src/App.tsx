@@ -27,7 +27,7 @@ const App = () => {
     };
     const token = localStorage.getItem("token");
     if (token) {
-      getToken("http://localhost:8000/verify", token);
+      getToken(`${import.meta.env.VITE_BACKEND_URL}/verify`, token);
     }
   }, [addUser]);
   return <RouterProvider router={router} />;
